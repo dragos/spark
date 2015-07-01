@@ -47,6 +47,12 @@ abstract class InputDStream[T: ClassTag] (@transient ssc_ : StreamingContext)
   /** This is an unique identifier for the input stream. */
   val id = ssc.getNewInputStreamId()
 
+  /**
+   * An estimated maximum number of elements that this cluster can process in a second.
+   * This value is updated by the job scheduler at each batch processing interval.
+   */
+  private var maximumRate: Option[Long] = None
+
   /** A human-readable name of this InputDStream */
   private[streaming] def name: String = {
     // e.g. FlumePollingDStream -> "Flume polling stream"
