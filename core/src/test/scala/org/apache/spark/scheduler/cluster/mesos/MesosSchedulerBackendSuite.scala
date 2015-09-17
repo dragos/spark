@@ -335,6 +335,31 @@ class MesosSchedulerBackendSuite extends SparkFunSuite with LocalSparkContext wi
     assert(workerOffers === List(new WorkerOffer("s1", "hosts1", 4)))
   }
 
+  test("does not accept offers that would go below zero cores") {
+    val driver = mock[SchedulerDriver]
+    val taskScheduler = mock[TaskSchedulerImpl]
+    when(taskScheduler.CPUS_PER_TASK).thenReturn(2)
+
+    val conf = new SparkConf
+    conf.set("spark.cores.max", "6")
+    conf.set("spark.mesos.mesosExecutor.cores", "3")
+
+    val sc = setupSparkContext()
+    when(sc.conf).thenReturn(conf)
+
+    val backend = new MesosSchedulerBackend(taskScheduler, sc, "master")
+
+    val minMem = backend.calculateTotalMemory(sc)
+    val offers = List(createOffer("o1", "s1", minMem, 8), createOffer("o2", "s2", minMem, 10))
+
+    val (usableOffers, workerOffers) = backend.usableWorkerOffers(driver, offers.asJava)
+
+    // 3 cores are set aside for the executor, so only 5 cores are available in the worker offer
+    // the second Mesos offer is not translated to a worker offer since all available cores are
+    // already consumed
+    assert(workerOffers === List(new WorkerOffer("s1", "hosts1", 5)))
+  }
+
   test("does not launch tasks above spark.cores.max") {
     val driver = mock[SchedulerDriver]
     val taskScheduler = mock[TaskSchedulerImpl]
