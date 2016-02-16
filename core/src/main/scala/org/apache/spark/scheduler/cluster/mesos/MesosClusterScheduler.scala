@@ -400,9 +400,14 @@ private[spark] class MesosClusterScheduler(
       (cmdExecutable, ".")
     }
     val primaryResource = new File(sandboxPath, desc.jarUrl.split("/").last).toString()
-    val cmdOptions = generateCmdOption(desc, sandboxPath).mkString(" ")
-    val appArguments = desc.command.arguments.mkString(" ")
-    builder.setValue(s"$executable $cmdOptions $primaryResource $appArguments")
+    val cmdOptions = generateCmdOption(desc, sandboxPath)
+    val appArguments = desc.command.arguments
+
+    builder.setShell(false)
+    for (arg <- cmdOptions ++ Seq(primaryResource) ++ appArguments) {
+      builder.addArguments(arg)
+    }
+    builder.setValue(executable)
     builder.setEnvironment(envBuilder.build())
     conf.getOption("spark.mesos.uris").map { uris =>
       setupUris(uris, builder)
