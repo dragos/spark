@@ -235,6 +235,10 @@
         <enabled>false</enabled>
       </snapshots>
     </repository>
+    <repository>
+      <id>hydra-releases</id>
+      <url>https://repo.triplequote.com/artifactory/libs-release-staging/</url>
+    </repository>
   </repositories>
   <pluginRepositories>
     <pluginRepository>
@@ -246,6 +250,10 @@
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
+    </pluginRepository>
+    <pluginRepository>
+      <id>hydra-releases</id>
+      <url>https://repo.triplequote.com/artifactory/libs-release-staging/</url>
     </pluginRepository>
   </pluginRepositories>
   <dependencies>
@@ -2012,9 +2020,10 @@
           <version>3.0.0</version>
         </plugin>
         <plugin>
-          <groupId>net.alchim31.maven</groupId>
+          <groupId>com.triplequote.maven</groupId>
           <artifactId>scala-maven-plugin</artifactId>
-          <version>3.2.2</version>
+          <!-- <version>3.2.2</version> -->
+           <version>3.2.3-SNAPSHOT</version>
           <executions>
             <execution>
               <id>eclipse-add-source</id>
@@ -2037,7 +2046,7 @@
           </executions>
           <configuration>
             <scalaVersion>${scala.version}</scalaVersion>
-            <recompileMode>incremental</recompileMode>
+             <recompileMode>incremental</recompileMode>
             <useZincServer>true</useZincServer>
             <args>
               <arg>-unchecked</arg>
@@ -2058,6 +2067,10 @@
               <javacArg>${java.version}</javacArg>
               <javacArg>-Xlint:all,-serial,-path,-try</javacArg>
             </javacArgs>
+            <hydraEnabled>true</hydraEnabled>
+            <hydraVersion>0.9.4-SNAPSHOT</hydraVersion>
+            <hydraCpus>4</hydraCpus>
+            <!-- <recompileMode>incremental</recompileMode> -->
           </configuration>
         </plugin>
         <plugin>
@@ -2453,7 +2466,7 @@
         <artifactId>maven-enforcer-plugin</artifactId>
       </plugin>
       <plugin>
-        <groupId>net.alchim31.maven</groupId>
+        <groupId>com.triplequote.maven</groupId>
         <artifactId>scala-maven-plugin</artifactId>
       </plugin>
       <plugin>

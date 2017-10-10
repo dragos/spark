@@ -59,9 +59,9 @@
     <pluginManagement>
       <plugins>
         <plugin>
-          <groupId>net.alchim31.maven</groupId>
+          <groupId>com.triplequote.maven</groupId>
           <artifactId>scala-maven-plugin</artifactId>
-          <version>3.2.2</version>
+          <version>3.2.3-SNAPSHOT</version>
           <configuration>
             <javacArgs combine.children="append">
               <!-- This option is needed to suppress warnings from sun.misc.Unsafe usage -->
