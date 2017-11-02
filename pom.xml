@@ -237,7 +237,7 @@
     </repository>
     <repository>
       <id>hydra-releases</id>
-      <url>https://repo.triplequote.com/artifactory/libs-release-staging/</url>
+      <url>https://repo.triplequote.com/artifactory/libs-snapshot/</url>
     </repository>
   </repositories>
   <pluginRepositories>
@@ -253,7 +253,7 @@
     </pluginRepository>
     <pluginRepository>
       <id>hydra-releases</id>
-      <url>https://repo.triplequote.com/artifactory/libs-release-staging/</url>
+      <url>https://repo.triplequote.com/artifactory/libs-snapshot/</url>
     </pluginRepository>
   </pluginRepositories>
   <dependencies>
@@ -2068,7 +2068,7 @@
               <javacArg>-Xlint:all,-serial,-path,-try</javacArg>
             </javacArgs>
             <hydraEnabled>true</hydraEnabled>
-            <hydraVersion>0.9.4-SNAPSHOT</hydraVersion>
+            <hydraVersion>0.9.7-SNAPSHOT</hydraVersion>
             <hydraCpus>4</hydraCpus>
             <!-- <recompileMode>incremental</recompileMode> -->
           </configuration>
